@@ -7,16 +7,15 @@ import { useAppContext } from "../features/authentication/hooks/useAppContext";
 
 function Nav() {
 	const [modal, setModal] = useState(false);
-	    const { loggedIn,logout } = useAppContext();
-
+	const { loggedIn, logout } = useAppContext();
 
 	const toggleModal = () => {
 		setModal(!modal);
 	};
 
-	const handleLogout = () =>{
+	const handleLogout = () => {
 		logout();
-	}
+	};
 	return (
 		<div className='d-flex justify-content-between align-items-center navbar navbar-expand-lg navbar-light shadow-sm mb-5 bg-body rounded'>
 			<div>
@@ -26,19 +25,18 @@ function Nav() {
 				<Button
 					name={"Add"}
 					onClick={toggleModal}
-					className={"btn btn-outline-danger mx-2"}></Button>
+					className={"btn btn-secondary mx-2"}></Button>
 				{!loggedIn ? (
 					<Link to='/login'>
 						<Button
 							name={"Login"}
-							className={"btn btn-outline-info mx-2"}></Button>
+							className={"btn btn-outline-dark mx-2"}></Button>
 					</Link>
 				) : (
 					<Button
 						name={"Logout"}
-						className={"btn btn-outline-info mx-2"}
-						onClick={handleLogout}
-						></Button>
+						className={"btn btn-outline-dark mx-2"}
+						onClick={handleLogout}></Button>
 				)}
 			</div>
 			{/* Modal component */}
