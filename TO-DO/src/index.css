@@ -29,8 +29,6 @@
 /* Reset               */
 /* ------------------- */
 
-/* https://piccalil.li/blog/a-modern-css-reset/ */
-
 /* Box sizing */
 *,
 *::before,
@@ -65,8 +63,6 @@ p {
 body {
   font-family: var(--ff-sans-normal);
   font-size: var(--fs-400);
-  /* color: hsl(var(--clr-white)) !important;
-  background-color: hsl(var(--clr-dark)) !important; */
   line-height: 1.5;
   min-height: 100vh;
 }
@@ -99,6 +95,17 @@ select {
   }
 }
 
+/* Heading*/
+.heading{
+ font-weight: 600;
+ font-size: var(--fs-600);
+  text-transform: capitalize;
+}
+.sub-heading {
+  font-weight: 500;
+  font-size: var(--fs-400);
+  text-transform: capitalize;
+}
 /* modal */
 
 .modal,
@@ -138,4 +145,50 @@ select {
 
 .active-modal {
   display: block !important;
+}
+
+/* logo */
+.logo{
+  max-width: 80px;
+}
+
+/* input-field */
+.input-field{
+  outline: none;
+  border:1px solid grey ;
+  border-radius: 6px;
+  padding: 8px;
+  width: 100%;
+}
+
+/* login page container */
+.login-page-container{
+background-image: url(../src/assets/pexels-tirachard-kumtanom-733852.jpg);
+  min-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+}
+.card{
+  opacity: .9 !important;
+}
+.login-input{
+       border: 1px solid grey;
+        padding: 0 10px;
+        border-radius: 6px;
+}
+/* icon */
+.icon{
+    max-width: 40px;
+    height: 35px;
+    padding: 5px;
+    margin:0 5px;
+    cursor: pointer;
+}
+.icon-addOn{
+background: #8080808a;
+border-radius: 50%;
 }

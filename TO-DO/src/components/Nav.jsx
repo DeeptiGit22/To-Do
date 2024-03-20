@@ -1,33 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import Button from "./ui/Button";
 import NewTodoModal from "../features/todo/components/NewTodoModal";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../features/authentication/components/LoginForm";
-import logo from '../../src/assets/logo-1.jpeg';
+import logo from "../../src/assets/logo-2.jpg";
+import { useAppContext } from "../features/authentication/hooks/useAppContext";
 
 function Nav() {
 	const [modal, setModal] = useState(false);
-    const isLoggedIn = useContext(AuthContext); // Access the isLoggedIn state from the AuthContext
+	    const { loggedIn,logout } = useAppContext();
 
 
 	const toggleModal = () => {
 		setModal(!modal);
 	};
-        const logout =()=>{
-        localStorage.removeItem("isLoggedIn");
-        window.location.href='/';
-    }
+
+	const handleLogout = () =>{
+		logout();
+	}
 	return (
-		<div className='d-flex justify-content-between align-items-center navbar navbar-expand-lg navbar-light bg-light'>
+		<div className='d-flex justify-content-between align-items-center navbar navbar-expand-lg navbar-light shadow-sm mb-5 bg-body rounded'>
 			<div>
-                <img src={logo} alt="" />
-            </div>
+				<img src={logo} alt='' className='logo' />
+			</div>
 			<div>
 				<Button
 					name={"Add"}
 					onClick={toggleModal}
 					className={"btn btn-outline-danger mx-2"}></Button>
-				{isLoggedIn ? (
+				{!loggedIn ? (
 					<Link to='/login'>
 						<Button
 							name={"Login"}
@@ -37,8 +37,8 @@ function Nav() {
 					<Button
 						name={"Logout"}
 						className={"btn btn-outline-info mx-2"}
-                        onClick={logout}
-                        ></Button>
+						onClick={handleLogout}
+						></Button>
 				)}
 			</div>
 			{/* Modal component */}

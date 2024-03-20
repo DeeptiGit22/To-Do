@@ -1,17 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import Button from "../../../components/ui/Button";
-import { AuthContext } from "../../authentication/components/LoginForm";
 import EditTodoModal from "./EditTodoModal";
 import ViewTodoModal from "./ViewTodoModal";
+import View from "../../../assets/icons8-eye-60.png"
+import Edit from "../../../assets/icons8-edit-64.png"
+import Delete from "../../../assets/icons8-delete-60.png"
+import { useAppContext } from "../../authentication/hooks/useAppContext";
+
 
 function TodoList() {
-	const isLoggedIn = localStorage.getItem("isLoggedIn");
 	const [tasks, setTasks] = useState([]);
 	const existingTodoList = JSON.parse(localStorage.getItem("todoList")) || [];
 	const [editTask, setEditTask] = useState(null); 
     const [viewTask, setViewTask] = useState(null); 
 	const [editModal, setEditModal] = useState(false); // Separate modal state for editing
     const [viewModal, setViewModal] = useState(false); // Separate modal state for viewing
+    const { loggedIn } = useAppContext();
+
 
 	const toggleEditModal = () => {
 		setEditModal(!editModal);
@@ -48,33 +53,34 @@ function TodoList() {
 	};
 
 	return (
-		<div className='container mt-4'>
+		<div className='container mt-2'>
+		{tasks.length > 0 && <h2 className="heading text-center">To-Do List</h2>}
 			{tasks.length > 0 ? (
-				<ul className='list-group'>
+				<ul className='list-group mt-4'>
 					{tasks.map((task, index) => (
 						<li
 							key={index}
 							className='list-group-item list-group-item d-flex justify-content-between align-items-center'>
-							<span> {task.title}</span>
+							<span className="text-capitalize fw-bold"> {task.title}</span>
 							<div className='d-flex'>
-								<Button name='View' className='btn btn-warning mx-2' onClick={()=>handleView(task)} />
-								{isLoggedIn && (
+									<img src={View} alt="" onClick={()=>handleView(task)} className="icon icon-addOn" data-bs-toggle="tooltip" data-bs-placement="top" title="View Task"/>
+								{loggedIn && (
 									<div>
-										<Button
-											name='Edit'
-											className='btn btn-warning mx-2'
-											onClick={() => handleEdit(task)}
-										/>
-										<Button name='Delete' className='btn btn-warning mx-2' onClick={() => handleDelete(task)} />
-									</div>
+								<div className="d-flex">
+								<img src={Edit} alt="" onClick={() => handleEdit(task)} className="icon  icon-addOn"/>
+								<img src={Delete} alt="" onClick={() => handleDelete(task)} className="icon  icon-addOn"/>
+								</div>
+								</div>
 								)}
 							</div>
 						</li>
 					))}
 				</ul>
 			) : (
-				<div>
-					<h1>You have no tasks. Add New</h1>
+				<div className="card-body text-center">
+					{/* <img src={envelope} alt="Ops Something went wrong" /> */}
+					<h2>You have no tasks</h2>
+					<h3>Add New</h3>
 				</div>
 			)}
 

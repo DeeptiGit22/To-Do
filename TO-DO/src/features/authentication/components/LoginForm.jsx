@@ -1,58 +1,76 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import Button from "../../../components/ui/Button";
+import User from "../../../assets/person.png";
+import Password from "../../../assets/password.png";
+import { useAppContext } from "../hooks/useAppContext";
 
-// Create a context
-const AuthContext = createContext();
+
 
 function LoginForm() {
 	const [username, setUserName] = useState("");
 	const [password, setPassword] = useState("");
-	const [isLoggedIn, setIsLoggedIn] = useState(false); // State to manage logged-in status
+	const { login } = useAppContext();
+	const [error, setError] = useState("");
 
-	const handleSubmit = (e) => {
-		e.preventDefault(); // Prevent the default form submission behavior
+	const handleLogin = () => {
+		// You should implement actual authentication logic here, for simplicity, just check if username and password are not empty
 		if (username && password) {
-			setIsLoggedIn(true);
-            localStorage.setItem("isLoggedIn",true)
-			window.location.href = "/";
+			login();
+			window.location.href="/";
+		} else {
+			setError("Please enter both username and password");
 		}
 	};
+
 	return (
-    <AuthContext.Provider value={isLoggedIn}>
-			<div className='container'>
-				<div className='card card-body'>
-					<form>
-						<div>
-							<label htmlFor='username'>UserName</label>
+		<div className='login-page-container'>
+			<div className='card p-4'>
+				<h3 className='mb-4 text-center'>Login</h3>
+				<form>
+					<div className='mb-2'>
+						<label htmlFor='username' className='mb-2'>
+							UserName
+						</label>
+						<div className='d-flex align-items-center login-input'>
+							<img src={User} alt='username' width={13} />
 							<input
 								type='text'
+								className='input-field border-0'
 								id='username'
 								value={username}
 								onChange={(e) => setUserName(e.target.value)}
+								placeholder='Enter Username'
 								required
 							/>
 						</div>
-						<div>
-							<label htmlFor='password'>Password</label>
+					</div>
+					<div className='mb-4'>
+						<label htmlFor='password' className='mb-2'>
+							Password
+						</label>
+						<div className='d-flex align-items-center login-input'>
+							<img src={Password} alt='password' width={13} />
 							<input
 								type='password'
 								id='password'
+								className='input-field border-0'
+								placeholder='Enter Password'
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								required
 							/>
 						</div>
-					</form>
-					<Button
-						name={"Login"}
-						onClick={handleSubmit}
-						className={"btn btn-info"}
-					/>
-				</div>
+					</div>
+				</form>
+				<Button
+					name={"Login"}
+					onClick={handleLogin}
+					className={"btn btn-secondary"}
+				/>
+				{error && <p style={{ color: "red" }}>{error}</p>}
 			</div>
-		</AuthContext.Provider>
+		</div>
 	);
 }
 
 export default LoginForm;
-export { AuthContext };
